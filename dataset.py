@@ -13,6 +13,16 @@ def findSongWithArtist(artist):
     songs = songsDf[["song", "artist"]].values.tolist()
     return songs
 
+def findSongSongNameContain(word):
+    songsDf = songdata[[word in song for song in songdata["artist"]]]
+    songs = songsDf[["song", "artist"]].values.tolist()
+    return songs
+
+def findSongContainBy(word, artist):
+    songsDf = songdata[[word in lyric for lyric in songdata["text"]] and [artist in song for song in songdata["artist"]]]
+    songs = songsDf[["song", "artist"]].values.tolist()
+    return songs
+
 if __name__ == "__main__":
     csvFile = r"./songdata.csv"
     songdata = pd.read_csv(csvFile)
