@@ -16,7 +16,7 @@ LYRICS_LOWER = "lyrics_lowercase"
 
 def findSongContain(word):
     songsDf = songdata[[word in lyric for lyric in songdata[LYRICS_LOWER]]]
-    songsDf.sample(frac=1)
+    songsDf.sample(frac=1) # return all rows in random order
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
