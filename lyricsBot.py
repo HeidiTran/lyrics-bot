@@ -64,6 +64,12 @@ class LyricsBot:
         self.displayResults(results=results, message="by {}:".format(artist.title()))
         self.getQuery(prompt="What else would you like to find? ")
 
+    def getSongsContainingPhraseFromArtist(self, phrase, artist):
+        """Queries the dataset and displays songs containing the phrase by the artist"""
+        results = dataset.findSongContainBy(phrase, artist)
+        self.displayResults(results=results, message="containing \"{}\" by {}:".format(phrase.title(), artist.title()))
+        self.getQuery(prompt="What other songs could I find for you today? ")
+
     def getRandomSong(self):
         """Queries the dataset and displays a few random songs"""
         results = dataset.randomSongs(RANDOM_SONG_COUNT)
