@@ -4,56 +4,61 @@ import re
 csvFile = r"./songdata.csv"
 songdata = pd.read_csv(csvFile)
 
+# Lowercase
 songdata["artist_lowercase"] = songdata["artist"].str.lower()
-songdata["song_lowercase"] = songdata["song"].str.lower()
-songdata["lyrics_lowercase"] = songdata["text"].str.lower()
 
-ARTIST = "artist"
-SONG = "song"
-LYRICS = "text"
-ARTIST_LOWER = "artist_lowercase"
-SONG_LOWER = "song_lowercase"
-LYRICS_LOWER = "lyrics_lowercase"
+# Lowercase
+songdata["song_lowercase"] = songdata["song"].str.lower()
+
+# Lowercase and replace \n with ""
+songdata["lyrics_clean"] = songdata["text"].str.lower()
+songdata["lyrics_clean"] = songdata["lyrics_clean"].str.replace("\\n", "")
+
+ARTIST_ORIG = "artist"
+SONG_ORIG = "song"
+LYRICS_ORIG = "text"
+ARTIST = "artist_lowercase"
+SONG = "song_lowercase"
+LYRICS = "lyrics_clean"
 
 def findSongContain(word):
     pat = phraseToRegex(word)
-    songsDf = songdata[songdata[LYRICS_LOWER].str.match(pat)]
+    songsDf = songdata[songdata[LYRICS].str.match(pat)]
     songsDf = songsDf.sample(frac=1) # return all rows in random order
-    songs = songsDf[[SONG, ARTIST]].values.tolist()
+    songs = songsDf[[SONG_ORIG, ARTIST_ORIG]].values.tolist()
     return songs
 
 def findSongWithArtist(artist):
     pat = phraseToRegex(artist)
-    songsDf = songdata[songdata[ARTIST_LOWER].str.match(pat)]
+    songsDf = songdata[songdata[ARTIST].str.match(pat)]
     songsDf = songsDf.sample(frac=1)
-    songs = songsDf[[SONG, ARTIST]].values.tolist()
+    songs = songsDf[[SONG_ORIG, ARTIST_ORIG]].values.tolist()
     return songs
 
 def findSongSongNameContain(word):
     pat = phraseToRegex(word)
-    songsDf = songdata[songdata[SONG_LOWER].str.match(pat)]
+    songsDf = songdata[songdata[SONG].str.match(pat)]
     songsDf = songsDf.sample(frac=1)
-    songs = songsDf[[SONG, ARTIST]].values.tolist()
+    songs = songsDf[[SONG_ORIG, ARTIST_ORIG]].values.tolist()
     return songs
 
 def findSongContainBy(word, artist):
     lyricsPat = phraseToRegex(word)
     artistPat = phraseToRegex(artist)
-    songsDf = songdata[songdata[LYRICS_LOWER].str.match(lyricsPat) and songdata[ARTIST_LOWER].str.match(artistPat)]
+    songsDf = songdata[songdata[LYRICS].str.match(lyricsPat) and songdata[ARTIST].str.match(artistPat)]
     songsDf = songsDf.sample(frac=1)
-    songs = songsDf[[SONG, ARTIST]].values.tolist()
+    songs = songsDf[[SONG_ORIG, ARTIST_ORIG]].values.tolist()
     return songs
 
 def randomSongs(songCnt):
     songsDf = songdata.sample(n=songCnt)
-    songs = songsDf[[SONG, ARTIST]].values.tolist()
+    songs = songsDf[[SONG_ORIG, ARTIST_ORIG]].values.tolist()
     return songs
 
 def phraseToRegex(phrase):
     phrase = phrase.strip() # Remove leading and trailing whitespace
     phrase = " ".join(phrase.split())   # Remove extra whitespace in between
-    phrase = "\\b" + phrase + "\\b"
-    pat = phrase.replace(" ", "\\b.*\\b")
+    pat = ".*\\b" + phrase.replace(" ", ".*\\b") + ".*"
     return pat
 
 
