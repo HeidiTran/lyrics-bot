@@ -4,7 +4,7 @@ import dataset
 from intentToPattern import intentToPattern
 
 RANDOM_SONG_COUNT = 3
-MAX_SEARCH_RESULT_LENGTH = 10
+MAX_RESULT_LENGTH = 10
 
 class LyricsBot:
     def __init__(self):
@@ -51,7 +51,6 @@ class LyricsBot:
                 elif foundMatch and intent == "findRandomSong":
                     self.getRandomSong()
                     return
-        
         self.noIntentFound()
 
     def getSongsContainingPhrase(self, phrase):
@@ -80,8 +79,8 @@ class LyricsBot:
         if len(results) != 0:
             plural = "songs" if len(results) > 1 else "song"
             print("Found {} {} {}".format(len(results), plural, message))
-            if len(results) > MAX_SEARCH_RESULT_LENGTH:
-                for i in range(MAX_SEARCH_RESULT_LENGTH):
+            if len(results) > MAX_RESULT_LENGTH:
+                for i in range(MAX_RESULT_LENGTH):
                     print("* {} - {}".format(results[i][0], results[i][1]))
             else:
                 for song in results:
