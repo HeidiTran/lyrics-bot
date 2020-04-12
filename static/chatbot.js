@@ -35,10 +35,14 @@ $("#message").keydown((e) => {
       data: JSON.stringify(jsonData),
       contentType: "application/json",
       dataType: "json",
-      success: (data) => { console.log(data) }
+      success: (data) => { respond(data); }
     });
   }
 });
+
+function respond(data) {
+  console.log(data);
+}
 
 $(document).ready(() => {
   greetUser();

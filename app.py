@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from lyricsBot import LyricsBot
 
+
 app = Flask(__name__)
 bot = LyricsBot()
 
@@ -11,4 +12,5 @@ def index():
     else:
         jsonData = request.get_json()
         bot.name = jsonData["username"]
-        return jsonify({"message": "{}, you head".format(jsonData["username"])}) 
+        results = bot.getQuery(jsonData["message"])
+        return jsonify(results) 
