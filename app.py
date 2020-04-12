@@ -1,11 +1,14 @@
-from flask import Flask, request, render_template
-
+from flask import Flask, request, render_template, jsonify
+from lyricsBot import LyricsBot
 
 app = Flask(__name__)
+bot = LyricsBot()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
         return render_template("index.html")
     else:
-        return "TO DOOOO"
+        jsonData = request.get_json()
+        bot.name = jsonData["username"]
+        return jsonify({"message": "{}, you head".format(jsonData["username"])}) 
