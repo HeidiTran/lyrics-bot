@@ -4,10 +4,7 @@ intentToPattern = {
         r".*quit.*",
         r".*done.*"
     ],
-    "findSongsAboutTopic": [
-        r".*songs?.*about\s(.*)",
-        r".*songs?.*related?\sto\s(.*)"
-    ],
+
     "findSongsContainingPhrase": [
         r".*songs?.*go like\s(.*)",
         r".*lyrics[:\s]*(.*)",
