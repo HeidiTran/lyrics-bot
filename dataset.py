@@ -52,7 +52,8 @@ def randomSongs(songCnt):
 def phraseToRegex(phrase):
     phrase = phrase.strip() # Remove leading and trailing whitespace
     phrase = " ".join(phrase.split())   # Remove extra whitespace in between
-    pat = re.sub(" ", ".*", phrase)
+    phrase = "\\b" + phrase + "\\b"
+    pat = phrase.replace(" ", "\\b.*\\b")
     return pat
 
 
