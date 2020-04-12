@@ -16,21 +16,25 @@ LYRICS_LOWER = "lyrics_lowercase"
 
 def findSongContain(word):
     songsDf = songdata[[word in lyric for lyric in songdata[LYRICS_LOWER]]]
+    songsDf.sample(frac=1)
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
 def findSongWithArtist(artist):
     songsDf = songdata[[artist in song for song in songdata[ARTIST_LOWER]]]
+    songsDf.sample(frac=1)
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
 def findSongSongNameContain(word):
     songsDf = songdata[[word in song for song in songdata[ARTIST_LOWER]]]
+    songsDf.sample(frac=1)
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
 def findSongContainBy(word, artist):
     songsDf = songdata[[word in lyric for lyric in songdata[LYRICS_LOWER]] and [artist in song for song in songdata[ARTIST_LOWER]]]
+    songsDf.sample(frac=1)
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
