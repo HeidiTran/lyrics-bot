@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 csvFile = r"./songdata.csv"
 songdata = pd.read_csv(csvFile)
@@ -15,25 +16,30 @@ SONG_LOWER = "song_lowercase"
 LYRICS_LOWER = "lyrics_lowercase"
 
 def findSongContain(word):
-    songsDf = songdata[[word in lyric for lyric in songdata[LYRICS_LOWER]]]
+    pat = phraseToRegex(word)
+    songsDf = songdata[songdata[LYRICS_LOWER].str.match(pat)]
     songsDf = songsDf.sample(frac=1) # return all rows in random order
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
 def findSongWithArtist(artist):
-    songsDf = songdata[[artist in song for song in songdata[ARTIST_LOWER]]]
+    pat = phraseToRegex(artist)
+    songsDf = songdata[songdata[ARTIST_LOWER].str.match(pat)]
     songsDf = songsDf.sample(frac=1)
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
 def findSongSongNameContain(word):
-    songsDf = songdata[[word in song for song in songdata[ARTIST_LOWER]]]
+    pat = phraseToRegex(word)
+    songsDf = songdata[songdata[SONG_LOWER].str.match(pat)]
     songsDf = songsDf.sample(frac=1)
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
 def findSongContainBy(word, artist):
-    songsDf = songdata[[word in lyric for lyric in songdata[LYRICS_LOWER]] and [artist in song for song in songdata[ARTIST_LOWER]]]
+    lyricsPat = phraseToRegex(word)
+    artistPat = phraseToRegex(artist)
+    songsDf = songdata[songdata[LYRICS_LOWER].str.match(lyricsPat) and songdata[ARTIST_LOWER].str.match(artistPat)]
     songsDf = songsDf.sample(frac=1)
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
@@ -42,6 +48,13 @@ def randomSongs(songCnt):
     songsDf = songdata.sample(n=songCnt)
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
+
+def phraseToRegex(phrase):
+    phrase = phrase.strip() # Remove leading and trailing whitespace
+    phrase = " ".join(phrase.split())   # Remove extra whitespace in between
+    pat = re.sub(" ", ".*", phrase)
+    return pat
+
 
 if __name__ == "__main__":
     csvFile = r"./songdata.csv"
