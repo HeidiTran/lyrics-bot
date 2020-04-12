@@ -1,7 +1,7 @@
 import re
 import time
 import dataset
-from intentToPattern import intentToPattern
+from intents import intentToPattern, yesPatterns
 
 RANDOM_SONG_COUNT = 3
 MAX_RESULT_LENGTH = 10
@@ -13,7 +13,7 @@ class LyricsBot:
     def greetUser(self):
         """Gets the user's name and initiates conversation with them"""
         self.name = input("Hello, I am LyricsBot! What is your name? ")
-        print("Nice to meet you, {}!".format(self.name))
+        print("Nice to meet you, {}!".format(self.name), end=" ")
         self.getQuery()
 
     def getQuery(self, prompt="What would you like to find? "):
@@ -80,14 +80,38 @@ class LyricsBot:
             plural = "songs" if len(results) > 1 else "song"
             print("Found {} {} {}".format(len(results), plural, message))
             if len(results) > MAX_RESULT_LENGTH:
-                for i in range(MAX_RESULT_LENGTH):
-                    print("* {} - {}".format(results[i][0], results[i][1]))
+                self.displayIncrementalResults(results=results)
             else:
                 for song in results:
                     print("* {} - {}".format(song[0], song[1]))
             print()
         else:
             print("Found no matches, sorry :(\n")
+
+    def displayIncrementalResults(self, results):
+        """Breaks large search results into smaller and more viewable chunks"""
+        displayed = 10
+        for i in range(MAX_RESULT_LENGTH):
+            print("* {} - {}".format(results[i][0], results[i][1]))
+        while displayed < len(results):
+            reply = input("\nWould you like to see more results? ")
+            for pattern in yesPatterns:
+                foundMatch = re.match(pattern, reply)
+                if foundMatch and displayed + 10 < len(results):
+                    print("\nDisplaying 10 more results:")
+                    for i in range(displayed, displayed + 10):
+                        print("* {} - {}".format(results[i][0], results[i][1]))
+                    displayed += 10
+                    break
+                elif foundMatch and displayed + 10 > len(results):
+                    songsLeft = len(results) - displayed
+                    plural = "results" if songsLeft > 1 else "result"
+                    print("\nDisplaying {} more {}:".format(songsLeft, plural))
+                    for i in range(displayed, len(results)):
+                        print("* {} - {}".format(results[i][0], results[i][1]))
+                    return
+                else: 
+                    return
 
     def noIntentFound(self):
         """Asks user to try asking the LyricBot again because an intent was not found"""
