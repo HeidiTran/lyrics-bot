@@ -3,6 +3,9 @@ import time
 import dataset
 from intentToPattern import intentToPattern
 
+RANDOM_SONG_COUNT = 3
+MAX_SEARCH_RESULT_LENGTH = 10
+
 class LyricsBot:
     def __init__(self):
         self.name = None
@@ -68,7 +71,8 @@ class LyricsBot:
     def getRandomSong(self):
         """Queries the dataset and displays a few random songs"""
         print("\nSearching...")
-        results = dataset.FUNCTION_NAME(results=results, message="for you:")
+        results = dataset.randomSongs(RANDOM_SONG_COUNT)
+        self.displayResults(results=results, message="for you:")
         self.getQuery(prompt="What else would you like to find? ")
 
     def displayResults(self, results, message):
@@ -76,11 +80,15 @@ class LyricsBot:
         if len(results) != 0:
             plural = "songs" if len(results) > 1 else "song"
             print("Found {} {} {}".format(len(results), plural, message))
-            for song in results:
-                print("* {} - {}".format(song[0], song[1]))
+            if len(results) > MAX_SEARCH_RESULT_LENGTH:
+                for i in range(MAX_SEARCH_RESULT_LENGTH):
+                    print("* {} - {}".format(results[i][0], results[i][1]))
+            else:
+                for song in results:
+                    print("* {} - {}".format(song[0], song[1]))
             print()
         else:
-            print("Found no matches, sorry :(")
+            print("Found no matches, sorry :(\n")
 
     def noIntentFound(self):
         """Asks user to try asking the LyricBot again because an intent was not found"""

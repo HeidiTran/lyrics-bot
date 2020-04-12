@@ -5,13 +5,13 @@ intentToPattern = {
         r".*done.*",
         r".*finish.*",
     ],
-
     "findSongsContainingPhrase": [
         r".*songs?.*go like\s(.*)",
         r".*lyrics[:\s]*(.*)",
         r".*songs?.*words?\s(.*)",
         r".*songs?.*contain(?:ing)?\s(.*)",
-        r".*songs?.*with\s(.*)",
+        r".*songs?.*with.*(?:phrase|words?)?\s(.*)",
+        r".*songs?.*about\s(.*)",
     ],
     "findSongsFromArtist": [
         r".*songs?.*from\s(.*)",
@@ -21,5 +21,6 @@ intentToPattern = {
         r".*random.*songs?.*",
         r".*songs?.*anything.*",
         r".*recommend.*songs?.*",
+        r".*suggest.*songs?.*",
     ]
 }
