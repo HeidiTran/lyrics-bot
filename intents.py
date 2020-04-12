@@ -4,6 +4,7 @@ intentToPattern = {
         r".*quit.*",
         r".*done.*",
         r".*finish.*",
+        r".*exit.*",
     ],
     "findSongsContainingPhrase": [
         r".*songs?.*go like\s(.*)",
@@ -24,3 +25,11 @@ intentToPattern = {
         r".*suggest.*songs?.*",
     ]
 }
+
+yesPatterns = [
+    r".*ye*s?.*",
+    r".*ok.*",
+    r".*sure.*",
+    r".*yeah.*",
+    r".*yup.*",
+]
