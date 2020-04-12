@@ -45,7 +45,8 @@ def findSongSongNameContain(word):
 def findSongContainBy(word, artist):
     lyricsPat = phraseToRegex(word)
     artistPat = phraseToRegex(artist)
-    songsDf = songdata[songdata[LYRICS].str.match(lyricsPat) and songdata[ARTIST].str.match(artistPat)]
+    songsDf = songdata[songdata[LYRICS].str.match(lyricsPat)]
+    songsDf = songsDf[songsDf[ARTIST].str.match(artistPat)]
     songsDf = songsDf.sample(frac=1)
     songs = songsDf[[SONG_ORIG, ARTIST_ORIG]].values.tolist()
     return songs
