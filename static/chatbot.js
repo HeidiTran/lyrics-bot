@@ -6,15 +6,19 @@ $("#message").keydown((e) => {
   if (e.which == ENTER) {
     let message = $("#message").val();
     $("#chatbox").append(
-      `<div class="card">
-        <div class="card-body>
-          <h5 class="card-title">
-            <i class="fas fa-user-alt mr-2"></i>
-            ${USERNAME}
-          </h5>
-          <p class="user card-body">${message}</p>
+      `
+      <div class="d-flex justify-content-end">
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-user-alt mr-2"></i>
+          ${USERNAME}
         </div>
-      </div>`
+        <div class="card-body">
+          <p class="card-text">${message}</p>
+        </div>
+      </div>
+      </div>
+      `
     );
     $("#message").val("");
     e.preventDefault();
@@ -55,15 +59,19 @@ function greetUser() {
 function botMessage(message) {
   setTimeout(() => {
     $("#chatbox").append(
-      `<div class="card">
-        <div class="card-body>
-          <h5 class="card-title">
+      `
+      <div class="d-flex justify-content-start">
+        <div class="card mb-3">
+          <div class="card-header">
             <i class="fas fa-robot mr-2"></i>
             LYRICS BOT
-          </h5>
-          <p class="bot card-body">${message}</p>
+          </div>
+          <div class="card-body">
+            <p class="card-text">${message}</p>
+          </div>
         </div>
-      </div>`
+      </div>
+      `
     );
   }, RESPONSE_DELAY);
 }

@@ -16,16 +16,32 @@
     <title>Lyrics Bot</title>
   </head>
   <body>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar sticky-top navbar-light bg-light">
       <a class="navbar-brand" href="/">
       <i class="fas fa-music mr-2"></i> 
         <b>Lyrics Bot</b>
       </a>
     </nav>
-    <div id="chatbox"></div>
-    <form id="messageForm" action="" class="fixed-bottom">
-      <input id="message" class="form-control" type="text" autocomplete="off">
-    </form>
+
+    <div class="container-fluid mt-2">
+      <div class="row">
+        <div class="col">
+          <div id="chatbox"></div>
+        </div>
+      </div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div class="row">
+        <div class="col">
+          <div class="ml-3 mb-3 mr-3 fixed-bottom">
+            <form id="messageForm">
+              <input id="message" class="form-control" type="text" autocomplete="off" placeholder="Find me a song contain the word Heidi">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
