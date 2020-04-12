@@ -34,6 +34,11 @@ def findSongContainBy(word, artist):
     songs = songsDf[[SONG, ARTIST]].values.tolist()
     return songs
 
+def randomSongs(songCnt):
+    songsDf = songdata.sample(n=songCnt)
+    songs = songsDf[[SONG, ARTIST]].values.tolist()
+    return songs
+
 if __name__ == "__main__":
     csvFile = r"./songdata.csv"
     songdata = pd.read_csv(csvFile)
