@@ -1,5 +1,4 @@
 import re
-import time
 import dataset
 from intents import intentToPattern, yesPatterns
 
@@ -55,21 +54,18 @@ class LyricsBot:
 
     def getSongsContainingPhrase(self, phrase):
         """Queries the dataset and displays songs with a particular word or phrase"""
-        print("\nSearching...")
         results = dataset.findSongContain(phrase)
         self.displayResults(results=results, message="containing \"{}\":".format(phrase.title()))
         self.getQuery(prompt="What else would you like to find? ")
 
     def getSongsFromArtist(self, artist):
         """Queries the dataset and displays songs by a particular artist"""
-        print("\nSearching...")
         results = dataset.findSongWithArtist(artist)
         self.displayResults(results=results, message="by {}:".format(artist.title()))
         self.getQuery(prompt="What else would you like to find? ")
 
     def getRandomSong(self):
         """Queries the dataset and displays a few random songs"""
-        print("\nSearching...")
         results = dataset.randomSongs(RANDOM_SONG_COUNT)
         self.displayResults(results=results, message="for you:")
         self.getQuery(prompt="What else would you like to find? ")
@@ -78,7 +74,7 @@ class LyricsBot:
         """Prints the results of a query if there are any songs to display"""
         if len(results) != 0:
             plural = "songs" if len(results) > 1 else "song"
-            print("Found {} {} {}".format(len(results), plural, message))
+            print("\nFound {} {} {}".format(len(results), plural, message))
             if len(results) > MAX_RESULT_LENGTH:
                 self.displayIncrementalResults(results=results)
             else:
@@ -89,7 +85,7 @@ class LyricsBot:
             print("Found no matches, sorry :(\n")
 
     def displayIncrementalResults(self, results):
-        """Breaks large search results into smaller and more viewable chunks"""
+        """Breaks large search results into smaller, more readable chunks"""
         displayed = 10
         for i in range(MAX_RESULT_LENGTH):
             print("* {} - {}".format(results[i][0], results[i][1]))
