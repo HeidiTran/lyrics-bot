@@ -1,4 +1,6 @@
 import re
+import time
+import dataset
 from intentToPattern import intentToPattern
 
 class LyricsBot:
@@ -7,13 +9,13 @@ class LyricsBot:
 
     def greetUser(self):
         """Gets the user's name and initiates conversation with them"""
-        self.name = input("Hello, I am LyricsBot! What is your name?\n")
+        self.name = input("Hello, I am LyricsBot! What is your name? ")
         print("Nice to meet you, {}!".format(self.name))
         self.getQuery()
 
-    def getQuery(self, prompt="What would you like to find?\n"):
+    def getQuery(self, prompt="What would you like to find? "):
         """Gets query from the user or quits the app"""
-        reply = input(prompt).lower()
+        reply = input(prompt)
         if self.userWantsToQuit(reply):
             self.quit()
         else:
@@ -38,37 +40,50 @@ class LyricsBot:
             for pattern in patterns:
                 foundMatch = re.match(pattern, reply)
                 if foundMatch and intent == "findSongsAboutTopic":
-                    self.findSongsAboutTopic(topic=foundMatch.group(1))
+                    self.getSongsAboutTopic(topic=foundMatch.group(1))
                     return
                 elif foundMatch and intent == "findSongsContainingPhrase":
-                    self.findSongsContainingPhrase(phrase=foundMatch.group(1))
+                    self.getSongsContainingPhrase(phrase=foundMatch.group(1))
                     return
                 elif foundMatch and intent == "findSongsFromArtist":
-                    self.findSongsFromArtist(artist=foundMatch.group(1))
+                    self.getSongsFromArtist(artist=foundMatch.group(1))
                     return
                 elif foundMatch and intent == "findRandomSong":
-                    self.findRandomSong()
+                    self.getRandomSong()
                     return
         
         self.noIntentFound()
 
-    def findSongsAboutTopic(self, topic):
+    def getSongsAboutTopic(self, topic):
         print("{} wants to find songs about {}".format(self.name, topic))
+        self.getQuery(prompt="What else would you like to find? ")
+
+    def getSongsContainingPhrase(self, phrase):
+        print("\nSearching...")
+        results = dataset.findSongContain(phrase)
+        self.displayResults(results=results, message="containing \"{}\"".format(phrase))
         self.getQuery(prompt="What else would you like to find?\n")
 
-    def findSongsContainingPhrase(self, phrase):
-        print("{} wants to find songs containing {}".format(self.name, phrase))
-        self.getQuery(prompt="What else would you like to find?\n")
+    def getSongsFromArtist(self, artist):
+        print("\nSearching...")
+        results = dataset.findSongWithArtist(artist)
+        self.displayResults(results=results, message="by {}:".format(artist.capitalize()))
+        self.getQuery(prompt="What else would you like to find? ")
 
-    def findSongsFromArtist(self, artist):
-        print("{} wants to find songs from {}".format(self.name, artist))
-        self.getQuery(prompt="What else would you like to find?\n")
-
-    def findRandomSong(self):
+    def getRandomSong(self):
         print("{} wants to find a random song to listen to!".format(self.name))
 
+    def displayResults(results, message):
+        if len(results) != 0:
+            print("Found {} songs {}".format(len(results), message))
+            for song in results:
+                print("* {} by {}".format(song[0], song[1]))
+            print()
+        else:
+            print("Found no matches, sorry :(")
+
     def noIntentFound(self):
-        self.getQuery(prompt="Sorry {}, but I'm not sure what you're asking for. Could you elaborate?".format(self.name))
+        self.getQuery(prompt="Sorry {}, but I'm not sure what you're asking for. Could you elaborate?\n".format(self.name))
 
 
 if __name__ == "__main__":

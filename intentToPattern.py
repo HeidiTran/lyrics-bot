@@ -12,6 +12,7 @@ intentToPattern = {
         r".*songs?.*go like\s(.*)",
         r".*lyrics[:\s]*(.*)",
         r".*songs?.*words?\s(.*)",
+        r".*songs?.*contain(?:ing)?\s(.*)"
     ],
     "findSongsFromArtist": [
         r".*songs?.*from\s(.*)",
