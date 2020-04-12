@@ -52,24 +52,30 @@ class LyricsBot:
         self.noIntentFound()
 
     def getSongsContainingPhrase(self, phrase):
+        """Queries the dataset and displays songs with a particular word or phrase"""
         print("\nSearching...")
         results = dataset.findSongContain(phrase)
-        self.displayResults(results=results, message="containing \"{}\"".format(phrase))
+        self.displayResults(results=results, message="containing \"{}\":".format(phrase.title()))
         self.getQuery(prompt="What else would you like to find? ")
 
     def getSongsFromArtist(self, artist):
+        """Queries the dataset and displays songs by a particular artist"""
         print("\nSearching...")
         results = dataset.findSongWithArtist(artist)
-        self.displayResults(results=results, message="by {}:".format(artist))
+        self.displayResults(results=results, message="by {}:".format(artist.title()))
         self.getQuery(prompt="What else would you like to find? ")
 
     def getRandomSong(self):
+        """Queries the dataset and displays a few random songs"""
         print("\nSearching...")
-        # TODO
+        results = dataset.FUNCTION_NAME(results=results, message="for you:")
+        self.getQuery(prompt="What else would you like to find? ")
 
     def displayResults(self, results, message):
+        """Prints the results of a query if there are any songs to display"""
         if len(results) != 0:
-            print("Found {} songs {}".format(len(results), message))
+            plural = "songs" if len(results) > 1 else "song"
+            print("Found {} {} {}".format(len(results), plural, message))
             for song in results:
                 print("* {} - {}".format(song[0], song[1]))
             print()
@@ -77,7 +83,8 @@ class LyricsBot:
             print("Found no matches, sorry :(")
 
     def noIntentFound(self):
-        self.getQuery(prompt="Sorry {}, but I'm not sure what you're asking for. Could you elaborate? ".format(self.name))
+        """Asks user to try asking the LyricBot again because an intent was not found"""
+        self.getQuery(prompt="Sorry {}, I'm not sure what you're asking for. Could you say that again? ".format(self.name))
 
 
 if __name__ == "__main__":
