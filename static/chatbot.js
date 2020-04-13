@@ -48,9 +48,11 @@ $("#message").keydown((e) => {
 function respond(userResponse) {
   const n = userResponse["results"].length;
   let message;
+  let userWantsToQuit = false;
   const songPlural = (n == 1) ? "song" : "songs";
 
   if (userResponse["intent"] == "quit") {
+    userWantsToQuit = true;
     message = `Okay, see you next time, ${USERNAME}!`;
   } else if (n == 0) {
     message = `Sorry ${USERNAME}, I couldn't find anything :(`
@@ -89,6 +91,8 @@ function respond(userResponse) {
     USER_RESPONSES = userResponse;
     NUM_SONGS_DISPLAYED = 10;
     createButtonMessage();
+  } else if (userWantsToQuit) {
+    return;
   } else {
     botMessage("What else can I do for you?");
   }

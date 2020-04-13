@@ -35,7 +35,7 @@ class LyricsBot:
 
     def quit(self):
         """Quits the application"""
-        return {"intent": "quit", "results": None, "entity": None}
+        return {"intent": "quit", "results": [], "entity": None}
 
     def getIntent(self, reply):
         """Gets the user's intent and calls relevant helper function"""
