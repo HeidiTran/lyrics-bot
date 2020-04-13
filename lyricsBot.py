@@ -1,4 +1,5 @@
 import re
+import string
 import dataset
 from intents import intentToPattern, yesPatterns
 
@@ -34,7 +35,7 @@ class LyricsBot:
 
     def quit(self):
         """Quits the application"""
-        return {"intent": "quit", "results": None}
+        return {"intent": "quit", "results": None, "entity": None}
 
     def getIntent(self, reply):
         """Gets the user's intent and calls relevant helper function"""
@@ -46,27 +47,27 @@ class LyricsBot:
                 elif foundMatch and intent == "findSongsFromArtist":
                     return self.getSongsFromArtist(artist=foundMatch.group(1))
                 elif foundMatch and intent == "findRandomSong":
-                    return self.getRandomSong()
+                    return self.getRandomSongs()
         return self.noIntentFound()
 
     def getSongsContainingPhrase(self, phrase):
         """Queries the dataset and displays songs with a particular word or phrase"""
         results = dataset.findSongContain(phrase)
-        return {"intent": "getSongContainingPhrase", "results": results}
+        return {"intent": "getSongsContainingPhrase", "results": results, "entity": string.capwords(phrase)}
 
     def getSongsFromArtist(self, artist):
         """Queries the dataset and displays songs by a particular artist"""
         results = dataset.findSongWithArtist(artist)
-        return {"intent": "getSongsFromArtist", "results": results}
+        return {"intent": "getSongsFromArtist", "results": results, "entity": string.capwords(artist)}
 
-    def getRandomSong(self):
+    def getRandomSongs(self):
         """Queries the dataset and displays a few random songs"""
         results = dataset.randomSongs(RANDOM_SONG_COUNT)
-        return {"intent": "getRandomSong", "results": results}
+        return {"intent": "getRandomSongs", "results": results, "entity": None}
 
     def noIntentFound(self):
         """Asks user to try asking the LyricBot again because an intent was not found"""
-        return {"intent": "noIntentFound", "results": None}
+        return {"intent": "noIntentFound", "results": None, "entity": None}
 
 
 if __name__ == "__main__":
