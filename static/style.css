@@ -1,7 +1,14 @@
 .user-card-body {
-  background-color: #ffe7c8;
+  background-color: #ff0080;
+  color: white;
+  border-radius: 40px;
 }
 
 .bot-card-body {
-  background-color: #d1f3fa;
+  background-color: #f7f7f7;
+  border-radius: 40px;
+}
+
+.card {
+  border-radius: 40px;
 }
