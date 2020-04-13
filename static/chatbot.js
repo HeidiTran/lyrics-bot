@@ -10,11 +10,7 @@ $("#message").keydown((e) => {
       `
       <div class="d-flex justify-content-end">
       <div class="card mb-3">
-        <div class="card-header">
-          <i class="fas fa-user-alt mr-2"></i>
-          ${USERNAME}
-        </div>
-        <div class="card-body">
+        <div class="card-body user-card-body">
           <p class="card-text">${message}</p>
         </div>
       </div>
@@ -108,7 +104,7 @@ function createButtonMessage() {
     </button>`
   );
 
-  botMessage(`Do you want to see more results?${button}`);
+  botMessage(`Do you want to see more results?<br/><div class="d-flex justify-content-around">${button}</div>`);
 }
 
 let N;
@@ -132,8 +128,9 @@ function userClickedYes() {
       message += `<br>- \"${song}\" by ${artist}`;
     }
 
+    botMessage(message);
     NUM_SONGS_DISPLAYED += 10;
-  } else {
+  } else if (N - NUM_SONGS_DISPLAYED > 0) {
     songsToShow = N;
     songPlural = (N - NUM_SONGS_DISPLAYED == 1) ? "song" : "songs";
     message = `Displaying ${N - NUM_SONGS_DISPLAYED} more ${songPlural}:`;
@@ -142,11 +139,12 @@ function userClickedYes() {
       song = USER_RESPONSES["results"][i][0];
       artist = USER_RESPONSES["results"][i][1];
       message += `<br>- \"${song}\" by ${artist}`;
-    }
+    } 
 
+    botMessage(message);
     NUM_SONGS_DISPLAYED = N;
-  }
-  botMessage(message);
+  } 
+
   if (NUM_SONGS_DISPLAYED != N) {
     createButtonMessage();
   } else {
@@ -175,11 +173,7 @@ function botMessage(message) {
       `
       <div class="d-flex justify-content-start">
         <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-robot mr-2"></i>
-            LYRICS BOT
-          </div>
-          <div class="card-body">
+          <div class="card-body bot-card-body">
             <p class="card-text">${message}</p>
           </div>
         </div>
