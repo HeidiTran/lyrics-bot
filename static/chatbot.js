@@ -18,6 +18,7 @@ $("#message").keydown((e) => {
       `
     );
     $("#message").val("");
+    window.scrollTo(0,document.body.scrollHeight);
     e.preventDefault();
 
     if (USERNAME == "USER") {
@@ -184,6 +185,7 @@ function botMessage(message) {
       </div>
       `
     );
+    window.scrollTo(0,document.body.scrollHeight);
   }, RESPONSE_DELAY);
 }
 
