@@ -1,7 +1,7 @@
 import re
 import string
 import dataset
-from intents import intentToPattern, yesPatterns
+from intents import intentToPattern
 
 
 RANDOM_SONG_COUNT = 10
