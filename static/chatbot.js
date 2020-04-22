@@ -50,6 +50,9 @@ function respond(userResponse) {
   if (userResponse["intent"] == "quit") {
     userWantsToQuit = true;
     message = `Okay, see you next time, ${USERNAME}!`;
+  } else if (userResponse["intent"] == "noIntentFound") {
+    userWantsToQuit = true;
+    message = `Hey ${USERNAME}, I'm not quite sure what you mean. Could you say that again?`;
   } else if (n == 0) {
     message = `Sorry ${USERNAME}, I couldn't find anything :(`
   } else if (userResponse["intent"] == "getSongsContainingPhrase") {
@@ -60,9 +63,7 @@ function respond(userResponse) {
     message = `Hey ${USERNAME}, I found ${n} ${songPlural} by ${artist}:`;
   } else if (userResponse["intent"] == "getRandomSongs") {
     message = `Hey ${USERNAME}, I found ${n} ${songPlural} for you to listen to:`;
-  } else if (userResponse["intent"] == "noIntentFound") {
-    message = `Hey ${USERNAME}, I'm not quite sure what you mean. Could you say that again?`;
-  }
+  } 
 
   let outputSize = 0;
   let moreToShow = false;

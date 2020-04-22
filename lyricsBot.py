@@ -67,7 +67,7 @@ class LyricsBot:
 
     def noIntentFound(self):
         """Asks user to try asking the LyricBot again because an intent was not found"""
-        return {"intent": "noIntentFound", "results": None, "entity": None}
+        return {"intent": "noIntentFound", "results": "", "entity": None}
 
 
 if __name__ == "__main__":

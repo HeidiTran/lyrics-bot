@@ -34,11 +34,3 @@ intentToPattern = {
         r".*suggest.*songs?.*",
     ]
 }
-
-yesPatterns = [
-    r".*ye*s?.*",
-    r".*ok.*",
-    r".*sure.*",
-    r".*yeah.*",
-    r".*yup.*",
-]
