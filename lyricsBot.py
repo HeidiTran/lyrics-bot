@@ -48,6 +48,8 @@ class LyricsBot:
                     return self.getSongsFromArtist(artist=foundMatch.group(1))
                 elif foundMatch and intent == "findRandomSong":
                     return self.getRandomSongs()
+                elif foundMatch and intent == "moreInfo":
+                    return self.getMoreInfo()
         return self.noIntentFound()
 
     def getSongsContainingPhrase(self, phrase):
@@ -64,6 +66,10 @@ class LyricsBot:
         """Queries the dataset and displays a few random songs"""
         results = dataset.randomSongs(RANDOM_SONG_COUNT)
         return {"intent": "getRandomSongs", "results": results, "entity": None}
+
+    def getMoreInfo(self):
+        """Prints a message to the user regarding what the chatbot can do"""
+        return {"intent": "moreInfo", "results": "", "entity": None}
 
     def noIntentFound(self):
         """Asks user to try asking the LyricBot again because an intent was not found"""

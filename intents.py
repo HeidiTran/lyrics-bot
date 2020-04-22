@@ -1,4 +1,12 @@
 intentToPattern = {
+    "moreInfo": [
+        r".*what.*you.*do.*",
+        r".*usage.*",
+        r".*not.*sure.*",
+        r".*help.*",
+        r".*idk.*",
+        r".*don.*know.*"
+    ],
     "userWantsToQuit": [
         r".*nothing.*",
         r".*quit.*",
@@ -32,5 +40,6 @@ intentToPattern = {
         r".*songs?.*anything.*",
         r".*recommend.*songs?.*",
         r".*suggest.*songs?.*",
+        r".*find.*music.*",
     ]
 }
