@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import string
 
 csvFile = r"./songdata.csv"
 songdata = pd.read_csv(csvFile)
@@ -13,6 +14,11 @@ songdata["song_lowercase"] = songdata["song"].str.lower()
 # Lowercase and replace \n with ""
 songdata["lyrics_clean"] = songdata["text"].str.lower()
 songdata["lyrics_clean"] = songdata["lyrics_clean"].str.replace("\\n", "")
+
+# Remove all punctuations
+punct = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{}~' # Join all strings together to form 1 huge str with sep = '|'
+transtab = str.maketrans(dict.fromkeys(punct, ''))
+songdata["lyrics_clean"] = '|'.join(songdata["lyrics_clean"].tolist()).translate(transtab).split('|')
 
 ARTIST_ORIG = "artist"
 SONG_ORIG = "song"
@@ -57,8 +63,10 @@ def randomSongs(songCnt):
     return songs
 
 def phraseToRegex(phrase):
+    phrase = phrase.translate(str.maketrans('', '', string.punctuation))    # Remove punctuations
     phrase = phrase.strip() # Remove leading and trailing whitespace
     phrase = " ".join(phrase.split())   # Remove extra whitespace in between
+    phrase = phrase.lower()
     pat = ".*\\b" + phrase.replace(" ", ".*\\b") + ".*"
     return pat
 
