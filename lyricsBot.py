@@ -1,7 +1,7 @@
 import re
 import string
 import dataset
-from intents import intentToPattern, yesPatterns
+from intents import intentToPattern
 
 
 RANDOM_SONG_COUNT = 10
@@ -48,6 +48,8 @@ class LyricsBot:
                     return self.getSongsFromArtist(artist=foundMatch.group(1))
                 elif foundMatch and intent == "findRandomSong":
                     return self.getRandomSongs()
+                elif foundMatch and intent == "moreInfo":
+                    return self.getMoreInfo()
         return self.noIntentFound()
 
     def getSongsContainingPhrase(self, phrase):
@@ -65,9 +67,13 @@ class LyricsBot:
         results = dataset.randomSongs(RANDOM_SONG_COUNT)
         return {"intent": "getRandomSongs", "results": results, "entity": None}
 
+    def getMoreInfo(self):
+        """Prints a message to the user regarding what the chatbot can do"""
+        return {"intent": "moreInfo", "results": "", "entity": None}
+
     def noIntentFound(self):
         """Asks user to try asking the LyricBot again because an intent was not found"""
-        return {"intent": "noIntentFound", "results": None, "entity": None}
+        return {"intent": "noIntentFound", "results": "", "entity": None}
 
 
 if __name__ == "__main__":

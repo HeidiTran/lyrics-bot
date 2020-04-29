@@ -18,6 +18,7 @@ $("#message").keydown((e) => {
       `
     );
     $("#message").val("");
+    window.scrollTo(0,document.body.scrollHeight);
     e.preventDefault();
 
     if (USERNAME == "USER") {
@@ -44,12 +45,18 @@ $("#message").keydown((e) => {
 function respond(userResponse) {
   const n = userResponse["results"].length;
   let message;
-  let userWantsToQuit = false;
+  let noFollowUpMessage = false;
   const songPlural = (n == 1) ? "song" : "songs";
 
   if (userResponse["intent"] == "quit") {
-    userWantsToQuit = true;
+    noFollowUpMessage = true;
     message = `Okay, see you next time, ${USERNAME}!`;
+  } else if (userResponse["intent"] == "moreInfo") {
+    noFollowUpMessage = true;
+    message = `${USERNAME}, currently I am programmed to do 3 things.<br>- If you would like to find random songs to listen to, say something like \"Find me some music.\"<br>- If you would like to find songs from a particular artist, say something like \"Find me songs by ARTIST.\"<br>- If you would like to find songs containing a certain phrase in the lyrics, say something like \"Find me some songs about PHRASE.\"`;
+  } else if (userResponse["intent"] == "noIntentFound") {
+    noFollowUpMessage = true;
+    message = `Hey ${USERNAME}, I'm not quite sure what you mean. If you're not sure what I can do, ask for help.`;
   } else if (n == 0) {
     message = `Sorry ${USERNAME}, I couldn't find anything :(`
   } else if (userResponse["intent"] == "getSongsContainingPhrase") {
@@ -60,9 +67,7 @@ function respond(userResponse) {
     message = `Hey ${USERNAME}, I found ${n} ${songPlural} by ${artist}:`;
   } else if (userResponse["intent"] == "getRandomSongs") {
     message = `Hey ${USERNAME}, I found ${n} ${songPlural} for you to listen to:`;
-  } else if (userResponse["intent"] == "noIntentFound") {
-    message = `Hey ${USERNAME}, I'm not quite sure what you mean. Could you say that again?`;
-  }
+  } 
 
   let outputSize = 0;
   let moreToShow = false;
@@ -87,7 +92,7 @@ function respond(userResponse) {
     USER_RESPONSES = userResponse;
     NUM_SONGS_DISPLAYED = 10;
     createButtonMessage();
-  } else if (userWantsToQuit) {
+  } else if (noFollowUpMessage) {
     return;
   } else {
     botMessage("What else can I do for you?");
@@ -180,9 +185,10 @@ function botMessage(message) {
       </div>
       `
     );
+    window.scrollTo(0,document.body.scrollHeight);
   }, RESPONSE_DELAY);
 }
 
 function getQuery() {
-  botMessage("What would you like to find?");
+  botMessage("What would you like to find? Ask for help if you're unsure. ");
 }
