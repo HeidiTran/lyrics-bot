@@ -1,6 +1,6 @@
 const OUTPUT_MAX = 10;
 const ENTER = 13;
-const RESPONSE_DELAY = 1500;
+const RESPONSE_DELAY = 500;
 let USERNAME = "USER";
 
 $("#message").keydown((e) => {
