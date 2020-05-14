@@ -1,7 +1,7 @@
 # **Lyrics Bot**
 
 <p align="center">
-  <img alt="Desktop View" src="images/desktopView.png"/>
+  <img width="640" height="480" alt="Desktop View" src="images/desktopView.png"/>
 </p>
 
 ## **Table of Contents**
