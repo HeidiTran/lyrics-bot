@@ -22,7 +22,7 @@ The objective of this project was to explore the concept of rule-based chatbots.
 Besides building a chatbot, we also learned a lot about responsive web design by trying to make the web app look good on different screen sizes. To do this, we made use of Bootstrap's out-of-the-box responsive components. The web app's phone view is shown below. In the end, we think it turned out quite nicely.
 
 <p align="center">
-  <img alt="Phone View" src="images/phoneView.png"/>
+  <img width="234" height="416" alt="Phone View" src="images/phoneView.png"/>
 </p>
 
 ## **How it Works**
