@@ -1,8 +1,8 @@
 # **Lyrics Bot**
 
-![Desktop View](images/desktopView.png)
-
----
+<p align="center">
+  <img alt="Desktop View" src="images/desktopView.png"/>
+</p>
 
 ## **Table of Contents**
 
@@ -11,13 +11,9 @@
 * [How it Works](#how-it-works)
 * [Technologies](#technologies)
 
----
-
 ## **Introduction**
 
 The Lyrics Chatbot is a rule-based chatbot capable of recommending random songs, finding songs by a particular artist, and finding songs containing a particular word or phrase in the lyrics.
-
----
 
 ## **Learning Objectives**
 
@@ -25,15 +21,13 @@ The objective of this project was to explore the concept of rule-based chatbots.
 
 Besides building a chatbot, we also learned a lot about responsive web design by trying to make the web app look good on different screen sizes. To do this, we made use of Bootstrap's out-of-the-box responsive components. The web app's phone view is shown below. In the end, we think it turned out quite nicely.
 
-![Phone View](images/phoneView.png)
-
----
+<p align="center">
+  <img alt="Phone View" src="images/phoneView.png"/>
+</p>
 
 ## **How it Works**
 
 The Lyrics Bot works by receiving POST requests with the user's message via AJAX requests from the web app. The sent data (which is the user's message) is then mapped to one of several intents using regular expressions. Once the intent has been identified, specific regular expression groups are sent as entities (e.g. artist name, word/phrase to match) to functions that will look through Pandas dataframes for matching rows to return. This data is finally sent in JSON format to be consumed by front-end JavaScript code.
-
----
 
 ## **Technologies**
 
